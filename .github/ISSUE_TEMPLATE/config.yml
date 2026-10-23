@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: CSS bug or feature request
+    url: https://github.com/RusticStack/pico-reforged/issues/new/choose
+    about: Problems with the stylesheet, the components, the themes or the build tools belong in the library repository.
+  - name: Questions and ideas
+    url: https://github.com/RusticStack/pico-reforged/discussions
+    about: Ask for help or suggest ideas in the library discussions.

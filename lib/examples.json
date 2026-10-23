@@ -39,13 +39,13 @@
     "slug": "kitchen-sink",
     "title": "Kitchen sink",
     "description": "Every element and component the stylesheet touches, on one page.",
-    "source": "test/fixtures/kitchen-sink.html"
+    "source": "examples/kitchen-sink.html"
   },
   {
     "slug": "tabs",
     "title": "Tabs",
     "description": "Tab lists and panels built on ARIA roles, an opt-in extra.",
-    "source": "test/fixtures/extras/tabs.html",
+    "source": "examples/tabs.html",
     "extra": "pico.extras",
     "stylesheet": "pico"
   }

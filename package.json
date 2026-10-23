@@ -4,6 +4,11 @@
   "private": true,
   "type": "module",
   "description": "Documentation site for Pico Reforged, deployed to pico.rusticstack.com",
+  "license": "MIT",
+  "packageManager": "pnpm@12.11.2",
+  "engines": {
+    "node": ">=22.18"
+  },
   "scripts": {
     "postinstall": "fumadocs-mdx",
     "prepare:css": "node scripts/copy-css.mjs",
@@ -13,7 +18,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@rusticstack/pico-reforged": "workspace:*",
+    "@rusticstack/pico-reforged": "2.0.1",
     "fumadocs-core": "16.17.3",
     "fumadocs-mdx": "15.4.7",
     "next": "16.4.1",

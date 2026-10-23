@@ -86,12 +86,9 @@ let cache: Map<string, TokenInfo> | null = null;
 function load(): Map<string, TokenInfo> {
   if (cache) return cache;
   cache = new Map();
-  const candidates = [
-    join(process.cwd(), "..", "ai", "tokens.json"),
-    join(process.cwd(), "node_modules", "@rusticstack", "pico-reforged", "ai", "tokens.json"),
-  ];
-  const file = candidates.find((candidate) => existsSync(candidate));
-  const declared = declarations(join(process.cwd(), ".."));
+  const pkgRoot = join(process.cwd(), "node_modules", "@rusticstack", "pico-reforged");
+  const file = [join(pkgRoot, "ai", "tokens.json")].find((candidate) => existsSync(candidate));
+  const declared = declarations(pkgRoot);
   for (const [name, value] of declared) cache.set(name, { value });
   if (!file) return cache;
   const data = JSON.parse(readFileSync(file, "utf8")) as Record<string, unknown>;

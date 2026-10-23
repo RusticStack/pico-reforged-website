@@ -3,14 +3,11 @@ import { existsSync, readFileSync } from "node:fs";
 import { join, relative } from "node:path";
 import { gzipSync } from "node:zlib";
 
-// Values computed at build time from the repository.
-
-const root = join(process.cwd(), "..");
+// Values computed at build time from the installed package and this repository.
 
 function pkg(): { version: string } {
-  for (const file of [join(root, "package.json"), join(process.cwd(), "node_modules", "@rusticstack", "pico-reforged", "package.json")]) {
-    if (existsSync(file)) return JSON.parse(readFileSync(file, "utf8"));
-  }
+  const file = join(process.cwd(), "node_modules", "@rusticstack", "pico-reforged", "package.json");
+  if (existsSync(file)) return JSON.parse(readFileSync(file, "utf8"));
   return { version: "2.0.1" };
 }
 

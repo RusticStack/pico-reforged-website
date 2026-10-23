@@ -14,7 +14,7 @@ const cssDir = join(pkgRoot, "css");
 const outDir = join(siteRoot, "public", "css");
 
 if (!existsSync(join(cssDir, "pico.min.css"))) {
-  console.error("css/pico.min.css is missing. Run `pnpm build` in the repository root first.");
+  console.error("css/pico.min.css is missing from @rusticstack/pico-reforged. Run `pnpm install` first.");
   process.exit(1);
 }
 
@@ -59,15 +59,16 @@ const lowered = transform({
 });
 writeFileSync(join(outDir, "site-themes.css"), lowered.code);
 
-// Standalone example pages, built from the repository's test fixtures. They run on the site's
-// origin, so they read the theme the visitor picked and follow it.
+// Standalone example pages, built from the copies in examples/ (taken from the library
+// repository's examples/ and test fixtures). They run on the site's origin, so they read the
+// theme the visitor picked and follow it.
 const examples = JSON.parse(readFileSync(join(siteRoot, "lib", "examples.json"), "utf8"));
 const exampleScript = `<script>${readFileSync(join(here, "example-theme.js"), "utf8")}</script>`;
 const examplesDir = join(siteRoot, "public", "examples");
 rmSync(examplesDir, { recursive: true, force: true });
 mkdirSync(examplesDir, { recursive: true });
 for (const example of examples) {
-  let html = readFileSync(join(pkgRoot, example.source), "utf8");
+  let html = readFileSync(join(siteRoot, example.source), "utf8");
   html = improveExample(html, { wrapTables: example.slug === "kitchen-sink" })
     .replaceAll("../css/", "/css/")
     .replace("__CSS__", `/css/${example.stylesheet ?? "pico"}.min.css`)

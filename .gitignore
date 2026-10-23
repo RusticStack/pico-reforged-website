@@ -1,8 +1,14 @@
+node_modules/
 .next/
 .source/
 out/
 public/css/
 public/skill/
+public/examples/
 next-env.d.ts
 *.tsbuildinfo
-public/examples/
+.vercel
+.env*
+*.log
+.DS_Store
+Thumbs.db

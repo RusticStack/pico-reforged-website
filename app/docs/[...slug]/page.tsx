@@ -8,7 +8,7 @@ import { ArrowLeftIcon, ArrowRightIcon } from "../../../components/icons";
 import { Toc, TocInline } from "../../../components/Toc";
 import { lastUpdated } from "../../../lib/build-info";
 import { getSidebar } from "../../../lib/sidebar";
-import { REPO_URL } from "../../../lib/site";
+import { SITE_REPO_URL } from "../../../lib/site";
 import { mdUrl, source } from "../../../lib/source";
 import { getMDXComponents } from "../../../mdx-components";
 
@@ -43,7 +43,7 @@ export default async function DocsPage({ params }: Props) {
   const previous = index > 0 ? all[index - 1] : undefined;
   const next = index >= 0 && index < all.length - 1 ? all[index + 1] : undefined;
   const section = sections.find((entry) => entry.items.some((item) => item.url === page.url));
-  const file = `site/content/docs/${page.path}`;
+  const file = `content/docs/${page.path}`;
   const updated = lastUpdated(join(process.cwd(), "content", "docs", page.path));
 
   return (
@@ -90,7 +90,7 @@ export default async function DocsPage({ params }: Props) {
           </div>
           <footer className="docs-footer">
             <p className="docs-meta">
-              <a href={`${REPO_URL}/blob/main/${file}`} rel="noopener">
+              <a href={`${SITE_REPO_URL}/blob/main/${file}`} rel="noopener">
                 Edit this page on GitHub
               </a>
               {updated ? <span>Last updated {updated}</span> : null}

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { ExampleThumb } from "../../components/ExampleThumb";
 import { CodeIcon } from "../../components/icons";
 import examples from "../../lib/examples.json";
-import { REPO_URL } from "../../lib/site";
+import { SITE_REPO_URL } from "../../lib/site";
 
 export const metadata: Metadata = {
   title: "Examples",
@@ -27,7 +27,7 @@ export default function ExamplesPage() {
               </h2>
               <p>{example.description}</p>
               <p className="gallery-links">
-                <a href={`${REPO_URL}/blob/main/${example.source}`} rel="noopener" aria-label={`View source of ${example.title}`}>
+                <a href={`${SITE_REPO_URL}/blob/main/${example.source}`} rel="noopener" aria-label={`View source of ${example.title}`}>
                   <CodeIcon size={14} aria-hidden="true" />
                   Source
                 </a>

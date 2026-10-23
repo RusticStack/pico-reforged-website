@@ -1,0 +1,36 @@
+name: Docs site bug
+description: Something on pico.rusticstack.com is wrong or broken. For bugs in the CSS itself, use the library repository.
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This repository is the documentation website. Bugs in the stylesheet, components, themes, CLI, compiler or plugins go to the [library issues](https://github.com/RusticStack/pico-reforged/issues). Please search the [open and closed issues](https://github.com/RusticStack/pico-reforged-website/issues?q=is%3Aissue) here first.
+  - type: input
+    id: page
+    attributes:
+      label: Page
+      description: The address of the page with the problem.
+      placeholder: https://pico.rusticstack.com/docs/...
+    validations:
+      required: true
+  - type: textarea
+    id: current
+    attributes:
+      label: What is wrong
+      description: Wrong or missing text, a broken link, a live example that does not render, search, the theme picker, dark mode, and so on.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Browser and device
+      description: Browser and version, operating system, and whether it is a phone or a desktop.
+    validations:
+      required: true

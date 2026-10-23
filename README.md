@@ -38,6 +38,17 @@ pnpm preview   # serves out/ on http://localhost:3000
 
 `pnpm typecheck` runs TypeScript.
 
+## Update the library version
+
+The site builds from the published npm package, pinned to an exact version in `package.json`. pnpm only installs versions older than its release age limit, so `pnpm-workspace.yaml` lists the current version in `minimumReleaseAgeExclude`, which lets a new release be used the day it is published. Both places and the lockfile have to change together. The script does it:
+
+```shell
+node scripts/bump-library.mjs 2.0.2 --dry-run   # print the changes, write nothing
+node scripts/bump-library.mjs 2.0.2
+```
+
+It checks with `npm view` that the version exists, sets the pin in `package.json`, replaces the `@rusticstack/pico-reforged@...` entry in `pnpm-workspace.yaml`, runs `pnpm install` to update `pnpm-lock.yaml` and prints the next steps: run `pnpm build`, compare the CSS with the previous release, update `examples/` if the originals changed, and open a pull request. Running it with the version that is already pinned changes nothing.
+
 ## Writing docs
 
 Pages live in `content/docs/<section>/<page>.mdx`. Order comes from `meta.json` in each folder. Frontmatter takes `title` and `description`.

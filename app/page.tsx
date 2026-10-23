@@ -215,6 +215,9 @@ export default function Home() {
             Pico Reforged keeps the class names, variables and CDN file names of Pico CSS v2.1.1 by Lucas Larroche, so most pages switch with one link.{" "}
             <Link href="/docs/migration/from-pico-css">Read the migration guide</Link>
           </p>
+          <p>
+            Pico Reforged is an independent fork of Pico CSS v2.1.1 (MIT). It is not affiliated with or endorsed by the Pico CSS project. The Pico CSS name and logo belong to their authors.
+          </p>
         </div>
       </section>
     </main>

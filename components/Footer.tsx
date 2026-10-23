@@ -73,6 +73,8 @@ export function Footer() {
             Pico CSS
           </a>{" "}
           by Lucas Larroche (MIT). Pico Reforged is not the official Pico CSS.
+          <br />
+          Pico Reforged is an independent fork of Pico CSS v2.1.1 (MIT). It is not affiliated with or endorsed by the Pico CSS project. The Pico CSS name and logo belong to their authors.
         </p>
       </div>
     </footer>

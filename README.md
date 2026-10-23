@@ -1,26 +1,42 @@
-# Pico Reforged site
+# Pico Reforged website
 
-The documentation site for https://pico.rusticstack.com. Next.js 16 (App Router, static export), Fumadocs headless (`fumadocs-core`, `fumadocs-mdx`, no `fumadocs-ui`, no Tailwind). The page chrome is styled with Pico Reforged itself, through the PostCSS integration in `postcss.config.mjs`, so the site is also a test of that integration.
+The documentation site for [Pico Reforged](https://github.com/rusticstack/pico-reforged), served at https://pico.rusticstack.com.
+
+Next.js 16 (App Router, static export) with Fumadocs headless (`fumadocs-core`, `fumadocs-mdx`, no `fumadocs-ui`, no Tailwind). The page chrome is styled with Pico Reforged itself through its PostCSS plugin (`postcss.config.mjs`), so the site also tests that integration.
+
+## Relation to the library
+
+The CSS framework lives in [rusticstack/pico-reforged](https://github.com/rusticstack/pico-reforged). This repository only holds the website. It uses the published npm package `@rusticstack/pico-reforged`, pinned to an exact version in `package.json`. The build copies the CSS, the theme sources, the compiler targets and the agent skill out of `node_modules`, so the site always shows the release it pins.
+
+To document a new release, bump the pin and the lockfile together:
+
+```shell
+pnpm add @rusticstack/pico-reforged@<version> --save-exact
+```
+
+The site was part of the library repository until version 2.0.1. Its history was kept when it moved here.
+
+`examples/` holds copies of pages from the library repository (`examples/*.html`, `test/fixtures/kitchen-sink.html` and `test/fixtures/extras/tabs.html`), because the npm package does not ship them. Update them by hand when the originals change.
 
 ## Develop
 
-From the repository root:
+Node 22.18 or newer and pnpm.
 
 ```shell
 pnpm install
-pnpm build            # writes css/, the site copies it into public/css
-pnpm run pack         # writes dist/, the PostCSS plugin the site loads
-pnpm --filter pico-reforged-site dev
+pnpm dev
 ```
 
-`dev` and `build` first run `scripts/copy-css.mjs`. It copies the built CSS (all themes, class-less, extras), the example pages from `examples/`, and `SKILL.md` into `public/` (ignored by git). It also writes `public/css/site-themes.css`, the runtime theme sheet the header color picker uses.
+`dev` and `build` first run `scripts/copy-css.mjs`. It copies the built CSS (all themes, class-less, extras) from the package, the pages in `examples/` and `SKILL.md` into `public/` (ignored by git). It also writes `public/css/site-themes.css`, the runtime theme sheet the header color picker uses.
 
 Build and preview the static output:
 
 ```shell
-pnpm --filter pico-reforged-site build
-pnpm --filter pico-reforged-site preview   # serves out/ on http://localhost:3000
+pnpm build
+pnpm preview   # serves out/ on http://localhost:3000
 ```
+
+`pnpm typecheck` runs TypeScript.
 
 ## Writing docs
 
@@ -40,24 +56,16 @@ Props: `title` (required), `height` (px, leave it out to fit the content), `vari
 
 Every page is also served as Markdown at `/md/<section>/<page>.md`, and listed in `/llms.txt` and `/llms-full.txt`.
 
-## Deploy to Vercel (free plan)
+## Deploy to Vercel
 
-The site is a static export, so the free plan is enough. Do this once:
+The site is a static export, so the free plan is enough. The Vercel project `pico-reforged-website` is linked to this repository:
 
-1. Create a Vercel project from the GitHub repository `rusticstack/pico-reforged`.
-2. Project settings, General:
-   - Root Directory: `site`
-   - Turn on "Include source files outside of the Root Directory in the Build Step" (the build needs the workspace root).
-   - Framework Preset: Other (`vercel.json` sets `"framework": null`). The site is a static export in `out/`, and the Next.js preset would look for a `.next` server build there and fail with "routes-manifest.json couldn't be found".
-3. Build settings come from `site/vercel.json`. They are the same as setting these by hand:
-   - Install Command: `cd .. && pnpm install --frozen-lockfile`
-   - Build Command: `cd .. && pnpm build && pnpm run pack && cd site && pnpm build`
-   - Output Directory: `out`
-   The root build and pack steps are needed because `css/` is built output and `dist/` (which holds the PostCSS plugin) is not committed.
-4. Domains, add `pico.rusticstack.com`.
-5. In the DNS of `rusticstack.com`, add a CNAME record: name `pico`, value `cname.vercel-dns.com`.
+- Root Directory: the repository root.
+- Framework Preset: Other (`vercel.json` sets `"framework": null`). The site is a static export in `out/`, and the Next.js preset would look for a `.next` server build there and fail with "routes-manifest.json couldn't be found".
+- Install Command `pnpm install --frozen-lockfile`, Build Command `pnpm build`, Output Directory `out`, all from `vercel.json`.
+- Domain `pico.rusticstack.com`, with a CNAME record `pico` to `cname.vercel-dns.com` in the DNS of `rusticstack.com`.
 
-Vercel issues the certificate once the record resolves. Pushes to `main` deploy to production, other branches get preview URLs.
+Pushes to `main` deploy to production, other branches get preview URLs.
 
 ## Notes
 
@@ -65,3 +73,11 @@ Vercel issues the certificate once the record resolves. Pushes to `main` deploy 
 - Search is static: the index is exported to `/api/search` and downloaded on first use. That is fine for this size of site.
 - Examples run in `sandbox="allow-scripts allow-same-origin"` iframes. Same-origin access lets their CSS requests carry cookies on protected preview deployments. The theme and color scheme reach them through `postMessage`, and a theme file that fails to load falls back to the base stylesheet.
 - The footer and the migration page credit Pico CSS by Lucas Larroche (MIT). Pico Reforged is not the official Pico CSS and does not use its logo.
+
+## Disclaimer
+
+Pico Reforged is an independent fork of Pico CSS v2.1.1 (MIT). It is not affiliated with or endorsed by the Pico CSS project. The Pico CSS name and logo belong to their authors.
+
+## License
+
+MIT, see [LICENSE](LICENSE). Pico Reforged is based on Pico CSS, Copyright (c) 2019-2024 Pico, and keeps that notice next to the Pico Reforged copyright.
